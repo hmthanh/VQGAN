@@ -33,6 +33,5 @@ class Encoder(nn.Module):
         self.model = nn.Sequential(*layers)
 
     def forward(self, x):
-        pass
         return self.mode(x)
 

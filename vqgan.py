@@ -1,7 +1,9 @@
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
+
 from codebook import Codebook
+from decoder import Decoder
+from encoder import Encoder
 
 
 class VQGAN(nn.Module):
@@ -13,7 +15,7 @@ class VQGAN(nn.Module):
         self.quant_conv = nn.Conv2d(args.latent_dim, args.latent_dim, 1).to(args.device)
         self.post_quant_conv = nn.Conv2d(args.latent_dim, args.latent_dim, 1).to(args.device)
 
-    def forward(self, x):
+    def forward(self, imgs):
         encoded_images = self.encoder(imgs)
         quant_conv_encoded_images = self.quant_conv(encoded_images)
         codebook_mapping, codebook_indices, q_loss = self.codebook(quant_conv_encoded_images)
